@@ -1,0 +1,156 @@
+<form class="container mt-5" [formGroup]="formData" (ngSubmit)="onSubmit()">
+    <h3>Reactive Driven Approach</h3>
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <label for="username">Username</label>
+        <input
+            formControlName="username"
+            type="text" 
+            class="form-control" 
+            placeholder="eg.- john01"
+        >
+        <small 
+            *ngIf = "formData.get('username').errors['invalidUsername'] && formData.get('username').touched"
+          class="text-danger">
+          Wrong Username Chosen
+        </small>
+
+        <small 
+            *ngIf = "formData.get('username').errors['required'] && formData.get('username').touched"
+          class="text-danger">
+          Invalid Username
+        </small>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="email">Email</label>
+        <input
+            formControlName="email"
+            type="email" 
+            class="form-control"
+            placeholder="eg.- john38@gmail.com"
+        >
+        <small 
+            *ngIf = "formData.get('email').errors['invalidEmail'] && formData.get('email').touched"
+          class="text-danger">
+          Wrong Email Chosen
+        </small>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="password">Password</label>
+        <input 
+            formControlName="password"
+            type="password" 
+            class="form-control" 
+            placeholder="eg.- jfid#284jf"
+        >
+      </div>
+      <div class="form-group">
+        <button
+          type="button"
+          (click)="onSetValue()"
+          class="btn btn-info">Set Value</button>
+         &nbsp;&nbsp;
+         <button
+          type="button"
+          (click)="onPatchValue()"
+          class="btn btn-success">Patch Value</button>
+      </div>
+    </div>
+    <div
+        formGroupName= "fullAdress"
+        class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="address">Adress</label>
+        <input
+            formControlName= "adress"
+            type="text" 
+            class="form-control"
+            placeholder="eg.- home town, New York ..." 
+        >
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="state">State</label>
+        <select 
+            formControlName= "state"
+            class="custom-select" 
+            >
+          <option selected disabled value="">Choose State</option>
+          <option value="MP">Madhya Pradesh</option>
+          <option value="UP">Uttar Pradesh</option>
+          <option value="GOA">Goa</option>
+          <option value="AP">Andhra Pradesh</option>
+        </select>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="zip">Zip</label>
+        <input 
+            formControlName= "zip"
+            type="text" 
+            class="form-control"  
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input 
+        formControlName= "bio"
+        type="textarea"
+        placeholder="Something about yourself.."
+        class="form-control">
+    </div>
+
+    <div formArrayName='hobbies'>
+
+        <button 
+            (click)="onAddHobbies()"
+            type="button" 
+            class="btn btn-primary">Add New Hobby
+        </button>
+        <br><br>
+        <div
+            *ngFor= "let hobbyList of formData.get('hobbies')['controls']; let i = index"
+            class="form-group">
+            <input 
+                [formControlName]="i"
+                class="form-control"
+                type="text"
+                placeholder="Enter New hobie..."
+            >
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        Select Gender <br>
+        <input
+            formControlName="gender" 
+            type="radio"
+            value="male"
+        >Male
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <input
+            formControlName="gender"
+            type="radio"
+            value="female"
+        >Female
+        
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+        <input
+            formControlName= "checkout"
+            class="form-check-input" 
+            type="checkbox" 
+            value="">
+        <label class="form-check-label" for="invalidCheck2">
+          Check me out.
+        </label>
+      </div>
+    </div>
+    <button
+        [disabled]="formData.invalid"
+      type="submit"
+      class="btn btn-primary"
+      >Submit
+    </button>
+</form>
